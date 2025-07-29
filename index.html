@@ -5,19 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mellohdev - Indie Game Developer</title>
   <style>
+    :root {
+      --bg: #ffffff;
+      --text: #222222;
+      --header-bg: #f5f5f5;
+      --footer-bg: #f0f0f0;
+      --card-bg: #f9f9f9;
+      --link: #007acc;
+      --shadow: #ddd;
+    }
+
+    body.dark {
+      --bg: #0d0d0d;
+      --text: #f2f2f2;
+      --header-bg: #111;
+      --footer-bg: #111;
+      --card-bg: #1a1a1a;
+      --link: #00ccff;
+      --shadow: #000;
+    }
+
     body {
       margin: 0;
       padding: 0;
-      background-color: #0d0d0d;
-      color: #f2f2f2;
+      background-color: var(--bg);
+      color: var(--text);
       font-family: 'Segoe UI', sans-serif;
       line-height: 1.6;
       text-align: center;
+      transition: background-color 0.3s, color 0.3s;
     }
 
     header {
       padding: 2rem 1rem;
-      background-color: #111;
+      background-color: var(--header-bg);
+      transition: background-color 0.3s;
     }
 
     header img {
@@ -31,9 +53,27 @@
     }
 
     p.tagline {
-      color: #aaa;
+      color: var(--text);
       font-size: 1.1rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .toggle-container {
+      margin-bottom: 1rem;
+    }
+
+    .toggle-btn {
+      background: none;
+      border: 1px solid var(--text);
+      color: var(--text);
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toggle-btn:hover {
+      background-color: var(--card-bg);
     }
 
     .games {
@@ -43,11 +83,12 @@
     }
 
     .game {
-      background-color: #1a1a1a;
+      background-color: var(--card-bg);
       border-radius: 12px;
       padding: 1rem;
       margin-bottom: 2rem;
-      box-shadow: 0 0 10px #000;
+      box-shadow: 0 0 10px var(--shadow);
+      transition: background-color 0.3s, box-shadow 0.3s;
     }
 
     .game img {
@@ -62,7 +103,7 @@
     }
 
     .game a {
-      color: #00ccff;
+      color: var(--link);
       text-decoration: none;
       display: inline-block;
       margin-top: 0.5rem;
@@ -74,8 +115,9 @@
 
     footer {
       padding: 2rem 1rem;
-      background-color: #111;
-      color: #888;
+      background-color: var(--footer-bg);
+      color: var(--text);
+      transition: background-color 0.3s;
     }
 
     @media (max-width: 600px) {
@@ -91,6 +133,10 @@
     <img src="img/developer_icon.png" alt="Logo di Mellohdev" />
     <h1>Mellohdev</h1>
     <p class="tagline">Indie mobile game developer</p>
+
+    <div class="toggle-container">
+      <button class="toggle-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+    </div>
   </header>
 
   <section class="games">
@@ -108,6 +154,32 @@
     <p>Contacts: <a href="mailto:mellohdev@gmail.com">mellohdev@gmail.com</a></p>
     <p>&copy; 2025 Mellohdev</p>
   </footer>
+
+  <script>
+  const body = document.body;
+  const btn = document.querySelector('.toggle-btn');
+
+  function setTheme(theme) {
+    if (theme === "dark") {
+      body.classList.add("dark");
+      btn.textContent = "☀️ Light Mode";
+    } else {
+      body.classList.remove("dark");
+      btn.textContent = "🌙 Dark Mode";
+    }
+    localStorage.setItem("theme", theme);
+  }
+
+  function toggleTheme() {
+    const isDark = body.classList.contains("dark");
+    setTheme(isDark ? "light" : "dark");
+  }
+
+  // Al caricamento della pagina, applica il tema salvato
+  const savedTheme = localStorage.getItem("theme") || "light";
+  setTheme(savedTheme);
+</script>
+
 
 </body>
 </html>
